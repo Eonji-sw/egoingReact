@@ -3,7 +3,10 @@ import './App.css';
 function Header(props) {
   console.log('props', props, props.title);
   return <header>
-    <h1><a href="/">{props.title}</a></h1>
+    <h1><a href="/" onClick={function(event){
+      event.preventDefault();
+      props.onChangeMode();
+    }}>{props.title}</a></h1>
   </header>
 }
 function Nav(props) {
@@ -32,7 +35,9 @@ function App() {
   ]
   return (
     <div>
-      <Header title="WEB"></Header>
+      <Header title="WEB" onChangeMode={function(){
+        alert('Header');
+      }}></Header>
       <Nav topics={topics}></Nav>
       <Article title="Welcome" body="Hello, WEB"></Article>
     </div>
