@@ -64,7 +64,7 @@ function Update(props) { // 5) component가 다시 렌더링
       <p><input type="text" name="title" placeholder="title" value={title} onChange={event=>{
         // 2) state를 value 값으로(state는 component 안에서 바꿀 수 있음)
         setTitle(event.target.value); // 3) onChange로 새로운 value를 입력할 때마다 setTitle 값 지정 -> 이때마다 
-      }}></input></p>
+      }} /></p>
       <p><textarea name="body" placeholder="body" value={body} onChange={event=>{
         setBody(event.target.value);
       }}></textarea></p>
@@ -97,10 +97,22 @@ function App() {
       }
     }
     content = <Article title={title} body={body}></Article>
-    contextControl = <li><a href={'/update/'+id} onClick={event=>{
-      event.preventDefault();
-      setMode('UPDATE');
-    }}>Update</a></li>
+    contextControl = <>
+      <li><a href={'/update/'+id} onClick={event=>{
+        event.preventDefault();
+        setMode('UPDATE');
+      }}>Update</a></li>
+      <li><input type="button" value="Delete" onClick={()=>{
+        const newTopics = []
+        for(let i=0; i<topics.length; i++) {
+          if(topics[i].id !== id) {
+            newTopics.push(topics[i]);
+          }
+        }
+        setTopics(newTopics);
+        setMode('WELCOME');
+      }} /> </li>
+    </>
   } else if(mode === 'CREATE') {
     content = <Create onCreate={(_title, _body)=>{
       const newTopic = {id:nextId, title:_title, body:_body}
